@@ -1,0 +1,56 @@
+一、使用了keras.Sequential，无需手动设置w和b。
+1.1、使用了keras.Sequential、optimizer.apply_gradients：（模型定义时没有model.build创建w和b，而是在运行时创建w和b）
+MyLearnHandWriting.py
+model = keras.Sequential([
+    layers.Dense(512, activation='relu'),
+    layers.Dense(256, activation='relu'),
+    layers.Dense(10)])
+...
+out = model(x) # 直接在运行时，模型中根据输入x的维度创建w和b
+--------------------------------------------------------------------------------------------------
+1.2、使用了keras.Sequential、model.build、optimizer.apply_gradients、repeat（代替epoch）：
+27_MNIST_in_action.py（细看for epoch的循环，对比使用了repeat代替for epoch循环的 30-1_metrics.py 的区别）
+28_Visualization.py
+30-1_metrics.py（做了笔记）
+network = Sequential([layers.Dense(256, activation='relu'),
+                      layers.Dense(128, activation='relu'),
+                      layers.Dense(64, activation='relu'),
+                      layers.Dense(32, activation='relu'),
+                      layers.Dense(10)])
+network.build(input_shape=(None, 28 * 28)) # 定义模型时build，创建w和b，不在运行时创建w和b
+network.summary()
+
+=========================================================================================================
+
+二、自定义w和b：
+2、自定义了w和b，使用了tf.Variable、optimizer.apply_gradients：
+18.1_main.py
+
+3、自定义了w和b，使用了tf.Variable，但手写梯度更新
+21_forward.py
+
+4、如果自定义了w和b，但是没有使用tf.Variable，则必须使用tape.watch([w, b])：
+25-5-6_Perceptron_and_gradient.py 等等
+
+***以上都使用了 with tf.GradientTape() as tape: 自定义设置损失函数等***
+
+=========================================================================================================
+
+三、使用了 Compile&Fit 装配函数：代替了 with tf.GradientTape() as tape。
+30-2_Compile&Fit.py
+30-3_layer_model.py（自定义模型）
+32_keras_train.py（自定义模型）
+34_train_evalute_test.py（自定义交叉验证）
+
+=========================================================================================================
+
+
+关于交叉熵损失函数参数设置：
+25-4_lossFunction_gradient.py 等等
+1、tf.losses.categorical_crossentropy、tf.losses.CategoricalCrossentropy
+1.1、from_logits=True
+logits直接在categorical_crossentropy函数内部自动计算softmax之后再求交叉熵，必须设置from_logits=True
+1.2、不设置 或 from_logits=False
+那么必须在最后一层layers使用Softmax函数进行计算。
+
+
