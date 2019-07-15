@@ -54,3 +54,10 @@ logits直接在categorical_crossentropy函数内部自动计算softmax之后再�
 那么必须在最后一层layers使用Softmax函数进行计算。
 
 
+Tensorflow的矩阵相乘：
+12_Computation.py
+# 第一个索引4 表示 batch批次：也就是4个矩阵点乘
+a = tf.ones([4,2,3])
+b = tf.fill([4,3,5], 2.)
+print(a@b)
+print(tf.matmul(a,b))
