@@ -69,6 +69,11 @@ print('sample:', sample[0].shape, sample[1].shape, tf.reduce_min(sample[0]), tf.
 
 def main():
 
+    '''
+    分开2次创建Sequential容器的原因：因为Conv层之后需要将 展平后连接 全连接层，
+    所以使用第一个Sequential容器创建Conv层，out = tf.reshape(out, [-1, 512])之后
+    再传入到第二个Sequential容器创建的全连接层。
+    '''
     # [b, 32, 32, 3] => [b, 1, 1, 512]
     conv_net = Sequential(conv_layers)
 
@@ -92,7 +97,7 @@ def main():
                 # [b, 32, 32, 3] => [b, 1, 1, 512]
                 out = conv_net(x)
                 # flatten, => [b, 512]
-                out = tf.reshape(out, [-1, 512])
+                out = tf.reshape(out, [-1, 512]) # 这就是创建两个Sequential容器的原因。
                 # [b, 512] => [b, 100]
                 logits = fc_net(out)
                 # [b] => [b, 100]
