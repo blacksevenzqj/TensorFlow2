@@ -3,10 +3,16 @@ from    tensorflow.keras import layers, optimizers, datasets, Sequential
 import  os
 from    resnet import resnet18
 
+
+'''
+    base_loging	屏蔽信息	             输出信息
+“0”	INFO	  无	          INFO + WARNING + ERROR + FATAL
+“1”	WARNING	 INFO	          WARNING + ERROR + FATAL
+“2”	ERROR	 INFO + WARNING	       ERROR + FATAL
+“3”	FATAL	 INFO + WARNING + ERROR	   FATAL
+'''
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 tf.random.set_seed(2345)
-
-
 
 
 
