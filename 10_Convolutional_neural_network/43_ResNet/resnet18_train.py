@@ -15,7 +15,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 tf.random.set_seed(2345)
 
 
-
 def preprocess(x, y):
     # [-1~1]
     x = tf.cast(x, dtype=tf.float32) / 255. - 0.5
@@ -45,7 +44,7 @@ def main():
     # [b, 32, 32, 3] => [b, 1, 1, 512]
     model = resnet18()
     model.build(input_shape=(None, 32, 32, 3))
-    model.summary()
+    model.summary() # 查看模型参数量
     optimizer = optimizers.Adam(lr=1e-3)
 
     for epoch in range(500):
