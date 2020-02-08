@@ -13,13 +13,14 @@ from    tensorflow.keras import layers, optimizers, datasets
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 (x, y), (x_val, y_val) = datasets.mnist.load_data()
-print('datasets:', x.shape, y.shape)
-x = tf.convert_to_tensor(x, dtype=tf.float32) / 255
+print('datasets:', x.shape, y.shape, type(x), type(y))
+x = tf.convert_to_tensor(x, dtype=tf.float32) / 255 # tensor数据格式为了GPU运算
 y = tf.convert_to_tensor(y, dtype=tf.int32)
 y = tf.one_hot(y, depth=10)
-print('datasets:', x.shape, y.shape)
+print('datasets:', x.shape, y.shape, type(x), type(y))
 train_dataset = tf.data.Dataset.from_tensor_slices((x, y))
 train_dataset = train_dataset.batch(200)
+print(type(train_dataset))
 
 '''
 定义时 不进行build，不创建w和b
@@ -32,6 +33,7 @@ model = keras.Sequential([
     layers.Dense(10)])
 
 optimizer = optimizers.SGD(learning_rate=0.001)
+
 
 
 def train_epoch(epoch):
@@ -53,11 +55,12 @@ def train_epoch(epoch):
             print(epoch, step, 'loss:', loss.numpy())
 
 
-def train():
-    for epoch in range(30):
+
+def train(epoch_num=30):
+    for epoch in range(epoch_num):
         train_epoch(epoch)
 
 
 
 if __name__ == '__main__':
-    train()
+    train(1)
