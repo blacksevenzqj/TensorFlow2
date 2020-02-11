@@ -39,7 +39,7 @@ tf.expand_dims(a, axis=-1).shape  # behind   TensorShape([4, 35, 10, 1])
 tf.expand_dims(a, axis=-2).shape  # behind   TensorShape([4, 35, 1, 10])
 
 # In[]:
-# tf.squeeze
+# tf.squeeze 降维
 a = tf.ones([1, 4, 1, 35, 1, 10])
 print(a.shape)
 tf.squeeze(a).shape   # # TensorShape([4, 35, 10])

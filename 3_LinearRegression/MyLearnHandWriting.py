@@ -12,6 +12,8 @@ from    tensorflow.keras import layers, optimizers, datasets
 '''
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
+
+# C:\Users\dell\.keras\datasets
 (x, y), (x_val, y_val) = datasets.mnist.load_data()
 print('datasets:', x.shape, y.shape, type(x), type(y))
 x = tf.convert_to_tensor(x, dtype=tf.float32) / 255 # tensor数据格式为了GPU运算
