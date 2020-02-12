@@ -2,7 +2,7 @@ import tensorflow as tf
 
 a = tf.random.normal([4, 28, 28, 3])
 a.shape   # TensorShape([4, 28, 28, 3])
-a.ndim   # 4 (int)
+print(a.ndim)   # 4 (int)
 
 # In[]:
 a = tf.random.normal([4, 28, 28, 3])
